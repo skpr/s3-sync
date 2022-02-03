@@ -12,9 +12,9 @@ import (
 
 var (
 	cliRegion   = kingpin.Flag("region", "When transferring objects from an s3 bucket to an s3 bucket, this specifies the region of the source bucket").Default(endpoints.ApSoutheast2RegionID).String()
-	cliEndpoint = kingpin.Flag("endpoint", "Override command's default URL with the given URL").String()
-	cliParallel = kingpin.Flag("parallel", "Sets maximum number of parallel file sync jobs").Default("16").Int()
-	cliDelete   = kingpin.Flag("delete", "Delete files which are not listed in the source").Bool()
+	cliEndpoint = kingpin.Flag("endpoint", "Override command's default URL with the given URL").Envar("SKPR_S3_SYNC_ENDPOINT").String()
+	cliParallel = kingpin.Flag("parallel", "Sets maximum number of parallel file sync jobs").Envar("SKPR_S3_SYNC_PARALLEL").Default("16").Int()
+	cliDelete   = kingpin.Flag("delete", "Delete files which are not listed in the source").Envar("SKPR_S3_SYNC_DELETE").Bool()
 	cliExclude  = kingpin.Flag("exclude", "Exclude paths from the list to be synced").Envar("SKPR_S3_SYNC_EXCLUDE").String()
 	cliSource   = kingpin.Arg("source", "Source files which are synced (local or S3 path)").Required().String()
 	cliTarget   = kingpin.Arg("target", "Target files which are synced (local or S3 path)").Required().String()
