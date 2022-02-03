@@ -8,6 +8,8 @@ github.com/aws/aws-sdk-go v1.42.45/go.mod h1:OGr6lGMAKGlG9CVrYnWYDKIyb829c6EVBRj
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/gabriel-vasile/mimetype v1.4.0 h1:Cn9dkdYsMIu56tGho+fqzh7XmvY2YyGU0FnbhiOsEro=
 github.com/gabriel-vasile/mimetype v1.4.0/go.mod h1:fA8fi6KUiG7MgQQ+mEWotXoEOvmxRtOJlERCzSmRvr8=
+github.com/gobwas/glob v0.2.3 h1:A4xDbljILXROh+kObIiy5kIaPYD8e96x1tgBhUI5J+Y=
+github.com/gobwas/glob v0.2.3/go.mod h1:d3Ez4x06l9bZtSvzIay5+Yzi0fmZzPgnTbPcKjJAkT8=
 github.com/jmespath/go-jmespath v0.4.0 h1:BEgLn5cpjn8UN1mAw4NjwDrS35OdebyEtFe+9YPoQUg=
 github.com/jmespath/go-jmespath v0.4.0/go.mod h1:T8mJZnbsbmF+m6zOOFylbeCJqk5+pHWvzYPziyZiYoo=
 github.com/jmespath/go-jmespath/internal/testify v1.5.1/go.mod h1:L3OGu8Wl2/fWfCI6z80xFu9LTZmf1ZRjMHUOPmWr69U=
@@ -15,6 +17,10 @@ github.com/pkg/errors v0.9.1/go.mod h1:bwawxfHBFNV+L2hUp1rHADufV3IMtnDRdf1r5NINE
 github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
 github.com/seqsense/s3sync v1.8.1 h1:eUEQ1aeDXaQjsoMrQdDZ4ZL2yTXWHWKWyUigpk2mr5k=
 github.com/seqsense/s3sync v1.8.1/go.mod h1:yVAPljnzE70ZLhn2OCaI35/59UpIl8RXYRvyU/Tthgs=
+github.com/skpr/s3sync v1.8.2-0.20220128231708-807c5cca87ba h1:SUvIm1ga+zlQQl9Nj7q+yzreHKnKlflarOF2ySdkCT4=
+github.com/skpr/s3sync v1.8.2-0.20220128231708-807c5cca87ba/go.mod h1:xWj9s4Od/L9i6aJJfUYBfaxKAyETAm2zgLVX2FuQ+Ds=
+github.com/skpr/s3sync v1.8.2-0.20220203223008-e72bb50af2a9 h1:BRdWrZmdB1Uv0YOC9DpLFcKB9lEePgnyKBvAVRP4SDg=
+github.com/skpr/s3sync v1.8.2-0.20220203223008-e72bb50af2a9/go.mod h1:xWj9s4Od/L9i6aJJfUYBfaxKAyETAm2zgLVX2FuQ+Ds=
 github.com/stretchr/objx v0.1.0/go.mod h1:HFkY916IF+rwdDfMAkV7OtwuqBVzrE8GR6GFx+wExME=
 github.com/stretchr/testify v1.4.0/go.mod h1:j7eGeouHqKxXV5pUuKE4zz7dFj8WfuZ+81PSLYec5m4=
 golang.org/x/net v0.0.0-20210505024714-0287a6fb4125/go.mod h1:9nx3DQGgdP8bBQD5qxJ1jj9UTztislL4KSBs9R2vV5Y=

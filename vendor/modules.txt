@@ -64,10 +64,20 @@ github.com/gabriel-vasile/mimetype
 github.com/gabriel-vasile/mimetype/internal/charset
 github.com/gabriel-vasile/mimetype/internal/json
 github.com/gabriel-vasile/mimetype/internal/magic
+# github.com/gobwas/glob v0.2.3
+## explicit
+github.com/gobwas/glob
+github.com/gobwas/glob/compiler
+github.com/gobwas/glob/match
+github.com/gobwas/glob/syntax
+github.com/gobwas/glob/syntax/ast
+github.com/gobwas/glob/syntax/lexer
+github.com/gobwas/glob/util/runes
+github.com/gobwas/glob/util/strings
 # github.com/jmespath/go-jmespath v0.4.0
 ## explicit; go 1.14
 github.com/jmespath/go-jmespath
-# github.com/seqsense/s3sync v1.8.1
+# github.com/seqsense/s3sync v1.8.1 => github.com/skpr/s3sync v1.8.2-0.20220203223008-e72bb50af2a9
 ## explicit; go 1.15
 github.com/seqsense/s3sync
 # golang.org/x/net v0.0.0-20211216030914-fe4d6282115f
@@ -77,3 +87,4 @@ golang.org/x/net/html/atom
 # gopkg.in/alecthomas/kingpin.v2 v2.2.6
 ## explicit
 gopkg.in/alecthomas/kingpin.v2
+# github.com/seqsense/s3sync => github.com/skpr/s3sync v1.8.2-0.20220203223008-e72bb50af2a9
