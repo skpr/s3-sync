@@ -1,0 +1,16 @@
+builds:
+  - env: [ CGO_ENABLED=0 ]
+    goos: [ linux, darwin ]
+    goarch: [ amd64, arm64 ]
+
+dockers:
+  - image_templates:
+      - "skpr/s3-sync:latest"
+      - "skpr/s3-sync:{{ .Tag }}"
+    build_flag_templates: [ "--pull" ]
+
+release:
+  prerelease: auto
+  github:
+    owner: skpr
+    name: s3-sync
