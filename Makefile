@@ -13,12 +13,16 @@ define go_build
 	GOOS=${1} GOARCH=${2} go build -o bin/skpr-s3-sync_${1}_${2} -ldflags='-extldflags "-static"' github.com/skpr/s3-sync
 endef
 
-# Run all lint checking with exit codes for CI.
+# Run go fmt against code
+fmt:
+	go fmt ./...
+
+# Run go vet against code
+vet:
+	go vet ./...
+
+# Run golint against code
 lint:
 	golint -set_exit_status `go list ./... | grep -v /vendor/`
-
-# Run tests with coverage reporting.
-test:
-	go test -cover ./...
 
 .PHONY: *
