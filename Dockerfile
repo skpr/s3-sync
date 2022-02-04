@@ -9,4 +9,4 @@ RUN chmod +x /usr/local/bin/s3-sync
 
 USER skpr
 
-ENTRYPOINT ["/usr/local/bin/s3-sync"]
+ENTRYPOINT ["/bin/sh", "-c", "/usr/local/bin/s3-sync \"$@\"", "--"]
