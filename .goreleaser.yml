@@ -8,6 +8,8 @@ dockers:
       - "skpr/s3-sync:latest"
       - "skpr/s3-sync:{{ .Tag }}"
     build_flag_templates: [ "--pull" ]
+    extra_files:
+      - entrypoint.sh
 
 release:
   prerelease: auto
