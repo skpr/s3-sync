@@ -1,19 +1,16 @@
 package main
 
 import (
+	"os"
+	"os/exec"
 	"strings"
 
-	"github.com/aws/aws-sdk-go/aws"
-	"github.com/aws/aws-sdk-go/aws/endpoints"
-	"github.com/aws/aws-sdk-go/aws/session"
-	"github.com/seqsense/s3sync"
 	"gopkg.in/alecthomas/kingpin.v2"
 )
 
 var (
-	cliRegion   = kingpin.Flag("region", "When transferring objects from an s3 bucket to an s3 bucket, this specifies the region of the source bucket").Default(endpoints.ApSoutheast2RegionID).String()
+	cliRegion   = kingpin.Flag("region", "When transferring objects from an s3 bucket to an s3 bucket, this specifies the region of the source bucket").Default("ap-southeast-2").String()
 	cliEndpoint = kingpin.Flag("endpoint", "Override command's default URL with the given URL").Envar("SKPR_S3_SYNC_ENDPOINT").String()
-	cliParallel = kingpin.Flag("parallel", "Sets maximum number of parallel file sync jobs").Envar("SKPR_S3_SYNC_PARALLEL").Default("16").Int()
 	cliDelete   = kingpin.Flag("delete", "Delete files which are not listed in the source").Envar("SKPR_S3_SYNC_DELETE").Bool()
 	cliExclude  = kingpin.Flag("exclude", "Exclude paths from the list to be synced").Envar("SKPR_S3_SYNC_EXCLUDE").String()
 	cliSource   = kingpin.Arg("source", "Source files which are synced (local or S3 path)").Required().String()
@@ -23,34 +20,35 @@ var (
 func main() {
 	kingpin.Parse()
 
-	config := &aws.Config{
-		Region:   cliRegion,
-		Endpoint: cliEndpoint,
-	}
+	args := buildArgs(*cliEndpoint, *cliSource, *cliTarget, *cliExclude)
 
-	sess, err := session.NewSession(config)
-	if err != nil {
+	cmd := exec.Command("aws", args...)
+
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
+
+	if err := cmd.Run(); err != nil {
 		panic(err)
 	}
+}
 
-	var options []s3sync.Option
+// Command which is compatible with the AWS S3 sync command line interface.
+func buildArgs(endpoint, source, target, exclude string) []string {
+	args := []string{"s3"}
 
-	if *cliDelete {
-		options = append(options, s3sync.WithDelete())
+	if endpoint != "" {
+		args = append(args, "--endpoint-url", endpoint)
 	}
 
-	if *cliParallel > 0 {
-		options = append(options, s3sync.WithParallel(*cliParallel))
+	args = append(args, "sync")
+
+	if exclude != "" {
+		for _, e := range strings.Split(exclude, ",") {
+			args = append(args, "--exclude", e)
+		}
 	}
 
-	for _, exclude := range strings.Split(*cliExclude, ",") {
-		options = append(options, s3sync.WithExcludePattern(exclude))
-	}
+	args = append(args, source, target)
 
-	syncManager := s3sync.New(sess, options...)
-
-	err = syncManager.Sync(*cliSource, *cliTarget)
-	if err != nil {
-		panic(err)
-	}
+	return args
 }
