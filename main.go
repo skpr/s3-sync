@@ -13,6 +13,7 @@ import (
 var (
 	cliEndpoint = kingpin.Flag("endpoint", "Override command's default URL with the given URL").Envar("SKPR_S3_SYNC_ENDPOINT").String()
 	cliExclude  = kingpin.Flag("exclude", "Exclude paths from the list to be synced").Envar("SKPR_S3_SYNC_EXCLUDE").Default(".htaccess").String()
+	cliMode     = kingpin.Flag("mode", "Mode which will used for syncing (sync or s3)").Envar("SKPR_S3_SYNC_MODE").Default("sync").String()
 	cliSource   = kingpin.Arg("source", "Source files which are synced (local or S3 path)").Required().String()
 	cliTarget   = kingpin.Arg("target", "Target files which are synced (local or S3 path)").Required().String()
 )
@@ -20,7 +21,7 @@ var (
 func main() {
 	kingpin.Parse()
 
-	args := buildArgs(*cliEndpoint, *cliSource, *cliTarget, *cliExclude)
+	args := buildArgs(*cliEndpoint, *cliMode, *cliSource, *cliTarget, *cliExclude)
 
 	slog.Info("Starting sync", "args", strings.Join(args, " "))
 
@@ -38,14 +39,14 @@ func main() {
 }
 
 // Command which is compatible with the AWS S3 sync command line interface.
-func buildArgs(endpoint, source, target, exclude string) []string {
+func buildArgs(endpoint, mode, source, target, exclude string) []string {
 	args := []string{"s3"}
 
 	if endpoint != "" {
 		args = append(args, "--endpoint-url", endpoint)
 	}
 
-	args = append(args, "sync")
+	args = append(args, mode)
 
 	if exclude != "" {
 		for _, e := range strings.Split(exclude, ",") {
