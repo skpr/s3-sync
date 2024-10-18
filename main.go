@@ -1,3 +1,4 @@
+// Package main wraps the AWS CLI command line utility for syncing files.
 package main
 
 import (
