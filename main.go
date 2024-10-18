@@ -1,17 +1,17 @@
+// Package main wraps the AWS CLI command line utility for syncing files.
 package main
 
 import (
+	"log/slog"
 	"os"
 	"os/exec"
 	"strings"
 
-	"gopkg.in/alecthomas/kingpin.v2"
+	"github.com/alecthomas/kingpin/v2"
 )
 
 var (
-	cliRegion   = kingpin.Flag("region", "When transferring objects from an s3 bucket to an s3 bucket, this specifies the region of the source bucket").Default("ap-southeast-2").String()
 	cliEndpoint = kingpin.Flag("endpoint", "Override command's default URL with the given URL").Envar("SKPR_S3_SYNC_ENDPOINT").String()
-	cliDelete   = kingpin.Flag("delete", "Delete files which are not listed in the source").Envar("SKPR_S3_SYNC_DELETE").Bool()
 	cliExclude  = kingpin.Flag("exclude", "Exclude paths from the list to be synced").Envar("SKPR_S3_SYNC_EXCLUDE").Default(".htaccess").String()
 	cliSource   = kingpin.Arg("source", "Source files which are synced (local or S3 path)").Required().String()
 	cliTarget   = kingpin.Arg("target", "Target files which are synced (local or S3 path)").Required().String()
@@ -22,14 +22,19 @@ func main() {
 
 	args := buildArgs(*cliEndpoint, *cliSource, *cliTarget, *cliExclude)
 
+	slog.Info("Starting sync", "args", strings.Join(args, " "))
+
 	cmd := exec.Command("aws", args...)
 
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
 
 	if err := cmd.Run(); err != nil {
-		panic(err)
+		slog.Error(err.Error())
+		os.Exit(1)
 	}
+
+	slog.Info("Sync finished")
 }
 
 // Command which is compatible with the AWS S3 sync command line interface.
