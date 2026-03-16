@@ -1,10 +1,10 @@
 module github.com/skpr/s3-sync
 
-go 1.22.6
+go 1.26
 
 require (
 	github.com/alecthomas/kingpin/v2 v2.4.0
-	github.com/stretchr/testify v1.9.0
+	github.com/stretchr/testify v1.11.1
 )
 
 require (

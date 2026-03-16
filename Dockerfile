@@ -1,9 +1,10 @@
-FROM golang:1.23-alpine as build
+FROM golang:1.26-alpine AS build
 ADD . /go/src/github.com/skpr/s3-sync
 WORKDIR /go/src/github.com/skpr/s3-sync
 RUN apk add make
-RUN make build
+RUN mise build
 
-FROM docker.io/amazon/aws-cli:2.17.59
-COPY --from=build /go/src/github.com/skpr/s3-sync/bin/s3-sync /usr/local/bin/s3-sync
+FROM docker.io/amazon/aws-cli:2.34.9
+ARG TARGETPLATFORM
+COPY $TARGETPLATFORM/skpr-s3-sync /usr/local/bin/s3-sync
 ENTRYPOINT ["/usr/local/bin/s3-sync"]
