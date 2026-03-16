@@ -19,7 +19,7 @@ dockers_v2:
     ids:
       - s3-sync
     images:
-      - 022593270620.dkr.ecr.ap-southeast-2.amazonaws.com/nmhc/s3-sync
+      - ghcr.io/skpr/s3-sync
     tags:
       - "latest"
     sbom: false
