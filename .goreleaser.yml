@@ -1,0 +1,30 @@
+project_name: s3-sync
+
+version: 2
+
+builds:
+  - id: s3-sync
+    binary: skpr-s3-sync
+    ldflags:
+      - -extldflags '-static'
+    env:
+      - CGO_ENABLED=0
+    goos: [ linux ]
+    goarch: [ amd64, arm64 ]
+    goamd64: [ v3 ]
+
+dockers_v2:
+  - id: s3-sync
+    dockerfile: Dockerfile
+    ids:
+      - s3-sync
+    images:
+      - 022593270620.dkr.ecr.ap-southeast-2.amazonaws.com/nmhc/s3-sync
+    tags:
+      - "latest"
+    sbom: false
+    flags:
+      - "--pull"
+
+changelog:
+  use: github-native

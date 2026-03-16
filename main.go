@@ -54,8 +54,8 @@ func main() {
 func buildArgs(endpoint, mode, source, target, exclude string) ([]string, error) {
 	args := []string{"s3"}
 
-	if *cliMode != ModeCP && *cliMode != ModeSync {
-		return args, fmt.Errorf("mode not support: %s", mode)
+	if mode != ModeCP && mode != ModeSync {
+		return args, fmt.Errorf("mode not supported: %s", mode)
 	}
 
 	if endpoint != "" {

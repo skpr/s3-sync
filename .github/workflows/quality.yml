@@ -1,31 +1,44 @@
-name: 📋 Quality
+name: 📋 Quality Checks
 
 on:
   pull_request:
     types: [ synchronize, opened, reopened, ready_for_review ]
 
-concurrency:
-  group: test-${{ github.head_ref }}
-  cancel-in-progress: true
-
 jobs:
-  test:
-    name: Test
+  lint:
+    name: 📋 Lint
     runs-on: ubuntu-latest
     steps:
-      - name: Git clone the repository
-        uses: actions/checkout@v4
+      - name: ⬇️ Git clone the repository
+        uses: actions/checkout@v5
 
-      - name: 📦 Install Go
-        uses: actions/setup-go@v3
-        with:
-          go-version: '1.23'
-
-      - name: Lint
+      - name: 📦 Install Mise
         run: |
-          go install github.com/mgechev/revive@latest
-          make lint
+          curl https://mise.run | sh
+          mise install
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Test
+      - name: 🧪 Lint
+        run: mise lint
+
+  test:
+    name: 📋 Test
+    needs: lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: ⬇️ Git clone the repository
+        uses: actions/checkout@v5
+
+      - name: 📦 Install Mise
         run: |
-          make test
+          curl https://mise.run | sh
+          mise install
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: 🧪 Lint
+        run: mise lint
+
+      - name: 🧪 Test
+        run: mise test
