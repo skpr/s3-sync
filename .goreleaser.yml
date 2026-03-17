@@ -21,7 +21,7 @@ dockers_v2:
     images:
       - ghcr.io/skpr/s3-sync
     tags:
-      - "latest"
+      - "v{{ .Version }}"
     sbom: false
     flags:
       - "--pull"
